@@ -19,10 +19,10 @@ jobs:
         run: node_modules/sfdx-cli/bin/run force:source:push
       - name: Run Apex tests
         run: node_modules/sfdx-cli/bin/run force:apex:test:run --codecoverage --resultformat human
+      - name: Run frontend tests
+        run: |
+          npm install @salesforce/sfdx-lwc-jest
+          npm run test:unit
       - name: Delete scratch org
         run: node_modules/sfdx-cli/bin/run force:org:delete --noprompt
       - uses: actions/checkout@v2
-      - name: Run Apex tests
-        run: node_modules/sfdx-cli/bin/run force:apex:test:run --codecoverage --resultformat human
-      - name: Delete scratch org
-        run: node_modules/sfdx-cli/bin/run force:org:delete --noprompt

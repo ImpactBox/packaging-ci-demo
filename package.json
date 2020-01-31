@@ -1,0 +1,23 @@
+{
+  "name": "packaging-ci-demo",
+  "version": "0.0.1",
+  "description": "Example of CI process that includes creation of new package version.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@salesforce/sfdx-lwc-jest": "^0.6.2"
+  },
+  "scripts": {
+    "test:unit": "sfdx-lwc-jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ImpactBox/packaging-ci-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ImpactBox/packaging-ci-demo/issues"
+  },
+  "homepage": "https://github.com/ImpactBox/packaging-ci-demo#readme"
+}
