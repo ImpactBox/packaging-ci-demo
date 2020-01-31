@@ -1,6 +1,10 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - README.md
+      - "**/README.md"
 
 jobs:
   ci:
@@ -25,4 +29,3 @@ jobs:
           npm run test:unit
       - name: Delete scratch org
         run: node_modules/sfdx-cli/bin/run force:org:delete --noprompt
-      - uses: actions/checkout@v2
