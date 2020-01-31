@@ -3,9 +3,8 @@ name: CI
 on: [push]
 
 jobs:
-  build:
+  push-source:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
@@ -22,3 +21,11 @@ jobs:
         run: node_modules/sfdx-cli/bin/run force:apex:test:run --codecoverage --resultformat human
       - name: Delete scratch org
         run: node_modules/sfdx-cli/bin/run force:org:delete --noprompt
+  apex-tests:
+    runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Run Apex tests
+          run: node_modules/sfdx-cli/bin/run force:apex:test:run --codecoverage --resultformat human
+        - name: Delete scratch org
+          run: node_modules/sfdx-cli/bin/run force:org:delete --noprompt
