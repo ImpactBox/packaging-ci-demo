@@ -10,3 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         run: npm install sfdx-cli
+      - name: Authenticate DevHub
+        run: |
+          echo "${{ secrets.SALESFORCE_JWT_SECRET_KEY }}" > server.key
+          force:auth:jwt:grant --clientid ${{ secrets.SALESFORCE_CONSUMER_KEY }} --jwtkeyfile server.key --username ${{ secrets.SALESFORCE_DEVHUB_USERNAME}} --setdefaultdevhubusername --setalias devhub
