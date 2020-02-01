@@ -29,3 +29,7 @@ jobs:
           npm run test:unit
       - name: Delete scratch org
         run: node_modules/sfdx-cli/bin/run force:org:delete --noprompt
+      # CREATE NEW PACKAGE VERSION FOR COMMITS ON MASTER
+      - name: Create new package version and release
+        if: github.ref == 'refs/heads/master'
+        run: echo github.ref

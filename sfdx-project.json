@@ -1,17 +1,17 @@
 {
-    "packageDirectories": [
-        {
-            "path": "force-app",
-            "default": true,
-            "package": "packaging-ci-demo-ns",
-            "versionName": "ver 0.1",
-            "versionNumber": "0.1.0.NEXT"
-        }
-    ],
-    "namespace": "boxDemo",
-    "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "47.0",
-    "packageAliases": {
-        "packaging-ci-demo-ns": "0Ho4H000000blMcSAI"
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true,
+      "package": "packaging-ci-demo-ns",
+      "versionName": "0.2.0",
+      "versionNumber": "0.2.0.NEXT"
     }
+  ],
+  "namespace": "boxDemo",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "47.0",
+  "packageAliases": {
+    "packaging-ci-demo-ns": "0Ho4H000000blMcSAI"
+  }
 }
