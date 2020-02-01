@@ -32,4 +32,4 @@ jobs:
       # CREATE NEW PACKAGE VERSION FOR COMMITS ON MASTER
       - name: Create new package version and release
         if: github.ref == 'refs/heads/master'
-        run: echo github.ref
+        run: echo {{github.ref}}
