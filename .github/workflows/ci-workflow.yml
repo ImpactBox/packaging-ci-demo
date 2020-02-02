@@ -43,8 +43,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${PACKAGEVERSION}
-          release_name: Release ${PACKAGEVERSION}
+          tag_name: ${{ PACKAGEVERSION }}
+          release_name: Release ${{ PACKAGEVERSION }}
           body: |
             Changes in this Release
             - First Change
