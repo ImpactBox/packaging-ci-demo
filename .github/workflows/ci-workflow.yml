@@ -39,7 +39,7 @@ jobs:
           PACKAGEINSTALL="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -x --json --targetdevhubusername devhub --wait 10)"
           echo ${PACKAGEINSTALL}
           PACKAGEVERSION=${PACKAGEINSTALL} | jq '.result.SubscriberPackageVersionId'
-          echo ::set-output name=package_version::{$PACKAGEVERSION}
+          echo ::set-output name=package_version::${PACKAGEVERSION}
       - name: Create release
         uses: actions/create-release@v1
         env:
