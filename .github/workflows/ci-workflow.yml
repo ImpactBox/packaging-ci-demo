@@ -33,18 +33,19 @@ jobs:
       - name: Delete scratch org
         run: node_modules/sfdx-cli/bin/run force:org:delete --noprompt
       - name: Create new package version and release
+        id: create_package
         if: github.ref == 'refs/heads/master'
         run: |
           PACKAGEINSTALL="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -x --json --targetdevhubusername devhub --wait 10)"
           echo ${PACKAGEINSTALL}
-          PACKAGEVERSION=${PACKAGEINSTALL} | jq '.result.SubscriberPackageVersionId'
+          ::set-output name=package_version::${PACKAGEINSTALL} | jq '.result.SubscriberPackageVersionId'
       - name: Create release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ PACKAGEVERSION }}
-          release_name: Release ${{ PACKAGEVERSION }}
+          tag_name: ${{ steps.create_package.outputs.package_version }}
+          release_name: Release ${{ steps.create_package.outputs.package_version }}
           body: |
             Changes in this Release
             - First Change
