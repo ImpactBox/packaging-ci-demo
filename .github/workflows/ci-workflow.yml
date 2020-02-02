@@ -37,4 +37,4 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           PACKAGEINSTALL="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -x --json --targetdevhubusername devhub --wait 10)"
-          echo ${PACKAGEINSTALL}.result.SubscriberPackageVersionId
+          echo ${PACKAGEINSTALL.result.SubscriberPackageVersionId}
