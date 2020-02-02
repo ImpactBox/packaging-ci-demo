@@ -6,6 +6,9 @@ on:
       - README.md
       - "**/README.md"
 
+env:
+  PACKAGENAME: packaging-ci-demo-ns
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -32,7 +35,6 @@ jobs:
       # CREATE NEW PACKAGE VERSION FOR COMMITS ON MASTER
       - name: Create new package version and release
         if: github.ref == 'refs/heads/master'
-        run: echo ${{github.ref}}
-      - name: Test feature branch conditional
-        if: github.ref == 'refs/heads/feature'
-        run: echo ${{github.ref}}
+        run: |
+          PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --installationkeybypass --json --targetdevhubusername devhub --wait 10)"
+          echo ${PACKAGEVERSION}
