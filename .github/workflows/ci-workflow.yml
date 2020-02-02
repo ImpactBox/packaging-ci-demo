@@ -36,5 +36,5 @@ jobs:
       - name: Create new package version and release
         if: github.ref == 'refs/heads/master'
         run: |
-          PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --installationkeybypass --json --targetdevhubusername devhub --wait 10)"
+          PACKAGEVERSION="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME --installationkeybypass --json --targetdevhubusername devhub --wait 10)"
           echo ${PACKAGEVERSION}
