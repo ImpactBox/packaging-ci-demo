@@ -32,9 +32,20 @@ jobs:
           npm run test:unit
       - name: Delete scratch org
         run: node_modules/sfdx-cli/bin/run force:org:delete --noprompt
-      # CREATE NEW PACKAGE VERSION FOR COMMITS ON MASTER
       - name: Create new package version and release
         if: github.ref == 'refs/heads/master'
         run: |
           PACKAGEINSTALL="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -x --json --targetdevhubusername devhub --wait 10)"
-          echo ${PACKAGEINSTALL} | jq '.result.SubscriberPackageVersionId'
+          echo ${PACKAGEINSTALL}
+          PACKAGEVERSION=${PACKAGEINSTALL} | jq '.result.SubscriberPackageVersionId'
+      - name: Create release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${PACKAGEVERSION}
+          release_name: Release ${PACKAGEVERSION}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
