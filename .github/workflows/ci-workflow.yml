@@ -38,10 +38,12 @@ jobs:
         run: |
           PACKAGEVERSIONID="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -x --json --targetdevhubusername devhub --wait 10  | jq -r '.result.SubscriberPackageVersionId')"
           echo ${PACKAGEVERSIONID}
+          node_modules/sfdx-cli/bin/run force:package:version:promote -p ${PACKAGEVERSIONID} -n
           PACKAGEVERSION="$(node_modules/sfdx-cli/bin/run force:package:version:report -p $PACKAGEVERSIONID --json | jq -r '.result.Version')"
           echo "::set-output name=package_version::${PACKAGEVERSION}"
       - name: Create release
         uses: actions/create-release@v1
+        if: github.ref == 'refs/heads/master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
