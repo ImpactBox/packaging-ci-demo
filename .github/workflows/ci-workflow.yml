@@ -1,5 +1,4 @@
 name: CI
-
 on:
   push:
     paths-ignore:
@@ -52,3 +51,13 @@ jobs:
           release_name: Release ${{ steps.create_package.outputs.package_version }}
           draft: false
           prerelease: false
+      - name: Commit changes
+        if: github.ref == 'refs/heads/master'
+        run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Update sfdx-project.json with released version numbers." -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
