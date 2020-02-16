@@ -36,7 +36,8 @@ jobs:
         id: create_package
         if: github.ref == 'refs/heads/master'
         run: |
-          PACKAGEVERSIONID="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -x --json --targetdevhubusername devhub --wait 10  | jq -r '.result.SubscriberPackageVersionId')"
+          NEXTVERSION="$(python ci/get-next-version.py "$(sfdx force:package:version:list -p packaging-ci-demo-ns -r -o CreatedDate | tail -1 | awk '{print $4}')")"
+          PACKAGEVERSIONID="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -a $NEXTVERSION -n $NEXTVERSION -x --json --targetdevhubusername devhub --wait 10  | jq -r '.result.SubscriberPackageVersionId')"
           echo ${PACKAGEVERSIONID}
           node_modules/sfdx-cli/bin/run force:package:version:promote -p ${PACKAGEVERSIONID} -n
           PACKAGEVERSION="$(node_modules/sfdx-cli/bin/run force:package:version:report -p $PACKAGEVERSIONID --json | jq -r '.result.Version')"
