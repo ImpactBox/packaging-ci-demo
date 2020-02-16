@@ -35,20 +35,21 @@ jobs:
         id: create_package
         if: github.ref == 'refs/heads/master'
         run: |
-          NEXTVERSION="$(python ci/get-next-version.py "$(node_modules/sfdx-cli/bin/run force:package:version:list -p packaging-ci-demo-ns -r -o CreatedDate | tail -1 | awk '{print $4}')")"
-          PACKAGEVERSIONID="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -a $NEXTVERSION -n $NEXTVERSION -x --json --targetdevhubusername devhub --wait 10  | jq -r '.result.SubscriberPackageVersionId')"
-          echo ${PACKAGEVERSIONID}
-          node_modules/sfdx-cli/bin/run force:package:version:promote -p ${PACKAGEVERSIONID} -n
-          PACKAGEVERSION="$(node_modules/sfdx-cli/bin/run force:package:version:report -p $PACKAGEVERSIONID --json | jq -r '.result.Version')"
-          echo "::set-output name=package_version::${PACKAGEVERSION}"
+          NEXT_VERSION="$(python ci/get-next-version.py "$(node_modules/sfdx-cli/bin/run force:package:version:list -p $PACKAGENAME -r -o CreatedDate | tail -1 | awk '{print $4}')")"
+          PACKAGE_VERSION_ID="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -a $NEXT_VERSION -n $NEXT_VERSION -x --json --targetdevhubusername devhub --wait 10  | jq -r '.result.SubscriberPACKAGE_VERSION_ID')"
+          NEXT_VERSION_NAME=""$(python ci/get-next-version.py $NEXT_VERSION)"
+          echo ${PACKAGE_VERSION_ID}
+          echo ${NEXT_VERSION_NAME}
+          node_modules/sfdx-cli/bin/run force:package:version:promote -p ${PACKAGE_VERSION_ID} -n
+          echo "::set-output name=package_name::${NEXT_VERSION_NAME}"
       - name: Create release
         uses: actions/create-release@v1
         if: github.ref == 'refs/heads/master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.create_package.outputs.package_version }}
-          release_name: Release ${{ steps.create_package.outputs.package_version }}
+          tag_name: ${{ steps.create_package.outputs.package_name }}
+          release_name: Release ${{ steps.create_package.outputs.package_name }}
           draft: false
           prerelease: false
       - name: Commit changes
