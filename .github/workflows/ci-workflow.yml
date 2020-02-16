@@ -36,7 +36,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           NEXT_VERSION="$(python ci/get-next-version.py "$(node_modules/sfdx-cli/bin/run force:package:version:list -p $PACKAGENAME -r -o CreatedDate | tail -1 | awk '{print $4}')")"
-          PACKAGE_VERSION_ID="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -a $NEXT_VERSION -n $NEXT_VERSION -x --json --targetdevhubusername devhub --wait 10  | jq -r '.result.SubscriberPACKAGE_VERSION_ID')"
+          PACKAGE_VERSION_ID="$(node_modules/sfdx-cli/bin/run force:package:version:create --package $PACKAGENAME -a $NEXT_VERSION -n $NEXT_VERSION -x --json --targetdevhubusername devhub --wait 10  | jq -r '.result.SubscriberPackageVersionID')"
           NEXT_VERSION_NAME=""$(python ci/get-next-version.py $NEXT_VERSION)"
           echo ${PACKAGE_VERSION_ID}
           echo ${NEXT_VERSION_NAME}
