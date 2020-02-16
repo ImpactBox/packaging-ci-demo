@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Example of CI process that includes creation of new package version.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "sfdx-cli": "^7.45.1"
+  },
   "devDependencies": {
     "@salesforce/sfdx-lwc-jest": "^0.6.2"
   },
